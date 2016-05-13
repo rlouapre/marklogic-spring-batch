@@ -3,7 +3,6 @@ package com.marklogic.spring.batch.core;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
 
 @XmlRootElement(name = "jobInstance", namespace=MarkLogicSpringBatch.JOB_NAMESPACE)
@@ -11,7 +10,7 @@ import org.springframework.batch.core.JobInstance;
 public class AdaptedJobInstance {
 	
 	private Long id;
-	private Integer version = new Integer(0);
+	private Integer version = 0;
 	private String jobName;
 	
 	public AdaptedJobInstance() { }
@@ -19,7 +18,7 @@ public class AdaptedJobInstance {
 	public AdaptedJobInstance(JobInstance jobInstance) {
 		this.id = jobInstance.getId();
 		if (jobInstance.getVersion() == null) {
-			jobInstance.setVersion(new Integer(0));
+			jobInstance.setVersion(0);
 		} else {
 			this.setVersion(jobInstance.getVersion());
 		}
@@ -31,10 +30,6 @@ public class AdaptedJobInstance {
 	}
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
-	}
-	
-	public void updateJobExecution(JobExecution jobExecution) {
-		return;
 	}
 
 	public Long getId() {

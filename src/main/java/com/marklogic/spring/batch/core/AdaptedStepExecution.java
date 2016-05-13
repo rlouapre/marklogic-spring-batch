@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.item.ExecutionContext;
 
@@ -22,7 +21,7 @@ import com.marklogic.spring.batch.bind.ExecutionContextAdapter;
 public class AdaptedStepExecution {
 	
 	private Long id;
-	private Integer version = new Integer(0);
+	private Integer version = 0;
 	private Long jobExecutionId;
 	private Long jobInstanceId;
 	private String jobName;
@@ -42,7 +41,7 @@ public class AdaptedStepExecution {
 	private String exitStatus = ExitStatus.EXECUTING.toString();
 	private boolean terminateOnly;
 	private int filterCount;
-	private List<Throwable> failureExceptions = new CopyOnWriteArrayList<Throwable>();
+	private List<Throwable> failureExceptions = new CopyOnWriteArrayList<>();
 	
 	public AdaptedStepExecution() { 
 		
@@ -73,15 +72,6 @@ public class AdaptedStepExecution {
 	
 	public String getExitCode() {
 		return exitStatus.split("=|;")[1];
-	}
-	
-	public JobExecution getJobExecution() {
-		//return jobExecution;
-		return null;
-	}
-
-	public void setJobExecution(JobExecution jobExecution) {
-		//this.jobExecution = jobExecution;
 	}
 
 	public String getStepName() {

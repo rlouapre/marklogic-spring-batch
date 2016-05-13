@@ -108,7 +108,7 @@ public class MarkLogicExecutionContextDaoTests extends AbstractSpringTest {
 	@Test
 	public void testSaveAndFindExecutionContexts() {
 
-		List<StepExecution> stepExecutions = new ArrayList<StepExecution>();
+		List<StepExecution> stepExecutions = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			JobInstance ji = jobInstanceDao.createJobInstance("testJob" + i, new JobParameters());
 			JobExecution je = new JobExecution(ji, new JobParameters());
@@ -221,7 +221,7 @@ public class MarkLogicExecutionContextDaoTests extends AbstractSpringTest {
 	public void testStoreInteger() {
 
 		ExecutionContext ec = new ExecutionContext();
-		ec.put("intValue", new Integer(343232));
+		ec.put("intValue", 343232);
 		stepExecution.setExecutionContext(ec);
 		contextDao.saveExecutionContext(stepExecution);
 		ExecutionContext restoredEc = contextDao.getExecutionContext(stepExecution);

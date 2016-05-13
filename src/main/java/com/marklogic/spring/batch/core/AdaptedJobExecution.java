@@ -26,7 +26,7 @@ import org.springframework.batch.item.ExecutionContext;
 public class AdaptedJobExecution {
 	
 	private JobParameters jobParameters;
-	private List<StepExecution> stepExecutions = new ArrayList<StepExecution>();
+	private List<StepExecution> stepExecutions = new ArrayList<>();
 	private JobInstance jobInstance;
 	private Date createDateTime;
 	private Date startDateTime;
@@ -36,7 +36,7 @@ public class AdaptedJobExecution {
 	private String exitStatus;
 	private Long id;
 	private String uri;
-	private Integer version = new Integer(0);
+	private Integer version = 0;
 	private ExecutionContext executionContext;
 
 	protected AdaptedJobExecution() { 
@@ -45,7 +45,7 @@ public class AdaptedJobExecution {
 	public AdaptedJobExecution(JobExecution jobExecution) {
 		this.id = jobExecution.getId();
 		if (jobExecution.getVersion() == null) {
-			jobExecution.setVersion(new Integer(0));
+			jobExecution.setVersion(0);
 		} else {
 			this.version = jobExecution.getVersion();
 		}
@@ -165,10 +165,6 @@ public class AdaptedJobExecution {
 
 	public String getExitCode() {
 		return exitStatus.split("=|;")[1];
-	}
-
-	public void setExitCode(String exitCode) {
-		return;
 	}
 
 	@XmlJavaTypeAdapter(ExecutionContextAdapter.class)

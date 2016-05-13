@@ -22,7 +22,7 @@ import com.marklogic.spring.batch.bind.JobInstanceAdapter;
 public class MarkLogicJobInstance {
 	
 	private JobInstance jobInstance;
-	private List<JobExecution> jobExecutions = new ArrayList<JobExecution>();
+	private List<JobExecution> jobExecutions = new ArrayList<>();
 	private String jobKey;
 	private Date createDateTime;
 	
@@ -74,9 +74,9 @@ public class MarkLogicJobInstance {
 				jobExecutionIndex = jobExecutions.indexOf(je);
 			} 
 		}
-		if (jobExecutionIndex.intValue() >= 0) {
+		if (jobExecutionIndex >= 0) {
 			jobExecutions.remove(jobExecutions.remove(jobExecutionIndex.intValue()));
-			jobExecutions.add(jobExecutionIndex.intValue(), jobExecution);
+			jobExecutions.add(jobExecutionIndex, jobExecution);
 		} else {
 			throw new NoSuchObjectException("JobExecution " + jobExecution.getId() + " does not exist");
 		}

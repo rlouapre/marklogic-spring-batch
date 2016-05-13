@@ -42,7 +42,7 @@ public class JobParametersAdapter extends XmlAdapter<AdaptedJobParameters, JobPa
 	@Override
 	public AdaptedJobParameters marshal(JobParameters jobParams) throws Exception {
 		AdaptedJobParameters adaptedJobParams = new AdaptedJobParameters();
-    	List<AdaptedJobParameters.AdaptedJobParameter> listOfParameters = new ArrayList<AdaptedJobParameters.AdaptedJobParameter>();
+    	List<AdaptedJobParameters.AdaptedJobParameter> listOfParameters = new ArrayList<>();
     	if (jobParams == null) {
     		return adaptedJobParams;
     	} else {		
@@ -57,8 +57,7 @@ public class JobParametersAdapter extends XmlAdapter<AdaptedJobParameters, JobPa
 	    				param.value = jobParams.getString(entry.getKey());    				
 	    				break;
 	    			case DATE:
-	    				String formatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(jobParams.getDate(entry.getKey()));
-	    				param.value = formatted;
+						param.value = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(jobParams.getDate(entry.getKey()));
 	    				break;
 	    			case DOUBLE:
 	    				param.value = jobParams.getDouble(entry.getKey()).toString();

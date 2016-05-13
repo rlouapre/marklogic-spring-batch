@@ -26,7 +26,6 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import com.marklogic.client.helper.DatabaseClientProvider;
-import com.marklogic.spring.batch.core.explore.MarkLogicJobExplorer;
 import com.marklogic.spring.batch.core.repository.MarkLogicSimpleJobRepository;
 import com.marklogic.spring.batch.core.repository.dao.MarkLogicJobExecutionDao;
 import com.marklogic.spring.batch.core.repository.dao.MarkLogicJobInstanceDao;
@@ -42,7 +41,7 @@ public class MarkLogicBatchConfiguration extends AbstractBatchConfiguration {
 	
 	@Bean
 	public JobExecutionDao jobExecutionDao() throws Exception {
-		MarkLogicJobExecutionDao dao = new MarkLogicJobExecutionDao(databaseClientProvider.getDatabaseClient(), jobInstanceDao());
+		MarkLogicJobExecutionDao dao = new MarkLogicJobExecutionDao(databaseClientProvider.getDatabaseClient());
 		dao.setIncrementer(new UriIncrementer());
 		return dao;
 	}
@@ -64,14 +63,12 @@ public class MarkLogicBatchConfiguration extends AbstractBatchConfiguration {
 	
 	@Bean
 	public ExecutionContextDao executionContextDao() throws Exception {
-		MapExecutionContextDao executionContextDao = new MapExecutionContextDao();
-		return executionContextDao;
+		return new MapExecutionContextDao();
 	}
 	
 	@Bean
 	public JobRepository jobRepository() throws Exception {
-		MarkLogicSimpleJobRepository jobRepository = new MarkLogicSimpleJobRepository(jobInstanceDao(), jobExecutionDao(), stepExecutionDao(), executionContextDao());
-		return jobRepository;
+		return new MarkLogicSimpleJobRepository(jobInstanceDao(), jobExecutionDao(), stepExecutionDao(), executionContextDao());
 	}
 	
 	@Bean
@@ -79,8 +76,7 @@ public class MarkLogicBatchConfiguration extends AbstractBatchConfiguration {
 		//CustomizableThreadFactory tf = new CustomizableThreadFactory("geoname-threads");
 		//SimpleAsyncTaskExecutor sate =  new SimpleAsyncTaskExecutor(tf);
 		//sate.setConcurrencyLimit(8);
-		SyncTaskExecutor ste = new SyncTaskExecutor();
-		return ste;
+		return new SyncTaskExecutor();
 	}
 
 	@Bean

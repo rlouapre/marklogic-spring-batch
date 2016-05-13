@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.repository.dao.JobExecutionDao;
-import org.springframework.batch.core.repository.dao.JobInstanceDao;
 import org.springframework.batch.core.repository.dao.NoSuchObjectException;
 import org.springframework.util.Assert;
 
@@ -40,11 +39,8 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 	public MarkLogicJobExecutionDao() {
 	}
 	
-	private JobInstanceDao jobInstanceDao;
-	
-	public MarkLogicJobExecutionDao(DatabaseClient databaseClient, JobInstanceDao jobInstanceDao) {
+	public MarkLogicJobExecutionDao(DatabaseClient databaseClient) {
 		this.databaseClient = databaseClient;
-		this.jobInstanceDao = jobInstanceDao;
 	}
 
 	@Override
@@ -57,7 +53,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 		XMLDocumentManager xmlDocMgr = databaseClient.newXMLDocumentManager();
 		String uri = SPRING_BATCH_DIR + jobExecution.getJobInstance().getId().toString() + ".xml";
         DocumentDescriptor desc = xmlDocMgr.exists(uri);
-        JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<MarkLogicJobInstance>(jaxbContext());
+        JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<>(jaxbContext());
 		xmlDocMgr.read(uri, handle);
 		MarkLogicJobInstance mji = handle.get();
 		mji.addJobExecution(jobExecution);
@@ -108,7 +104,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 				throw new NoSuchObjectException("Invalid JobExecution, Document " + uri + " not found.");
 			}
 			jobExecution.setVersion(jobExecution.getVersion() + 1);	
-			JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<MarkLogicJobInstance>(jaxbContext());
+			JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<>(jaxbContext());
 			xmlDocMgr.read(uri, handle);
 			MarkLogicJobInstance mji = handle.get();
 			mji.updateJobExecution(jobExecution);
@@ -125,7 +121,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 	public List<JobExecution> findJobExecutions(JobInstance jobInstance) {
 		String uri = SPRING_BATCH_DIR + jobInstance.getId().toString() + ".xml";
     	XMLDocumentManager xmlDocMgr = databaseClient.newXMLDocumentManager();
-    	JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<MarkLogicJobInstance>(jaxbContext());
+    	JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<>(jaxbContext());
     	MarkLogicJobInstance mji = xmlDocMgr.read(uri, handle).get();
     	List<JobExecution> jobExecutions = mji.getJobExecutions();
     	Collections.reverse(mji.getJobExecutions());
@@ -149,9 +145,9 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
     	logger.info(querydef.serialize());
     	QueryManager queryMgr = databaseClient.newQueryManager();
     	SearchHandle results = queryMgr.search(querydef, new SearchHandle()); 	    	
-		Set<JobExecution> jobExecutions = new HashSet<JobExecution>();
+		Set<JobExecution> jobExecutions = new HashSet<>();
 		for ( MatchDocumentSummary summary : results.getMatchResults() ) {
-			JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<MarkLogicJobInstance>(jaxbContext());
+			JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<>(jaxbContext());
     		summary.getFirstSnippet(handle);
     		MarkLogicJobInstance mji = handle.get();
     		for (JobExecution je : mji.getJobExecutions()) {
@@ -172,7 +168,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
     	SearchHandle results = queryMgr.search(querydef, new SearchHandle());
     	if (results.getTotalResults() > 0L) {
     		MatchDocumentSummary[] summaries = results.getMatchResults();
-    		JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<MarkLogicJobInstance>(jaxbContext());
+    		JAXBHandle<MarkLogicJobInstance> handle = new JAXBHandle<>(jaxbContext());
     		MarkLogicJobInstance mji = summaries[0].getFirstSnippet(handle).get();	
     		if (mji.getJobExecutions().size() >= 1) {
     			for (JobExecution je : mji.getJobExecutions()) {
@@ -189,9 +185,9 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 	@Override
 	public void synchronizeStatus(JobExecution jobExecution) {
 		JobExecution je = getJobExecution(jobExecution.getId());
-		int currentVersion = je.getVersion().intValue();
+		int currentVersion = je.getVersion();
 
-		if (currentVersion != jobExecution.getVersion().intValue()) {
+		if (currentVersion != jobExecution.getVersion()) {
 			BatchStatus status = je.getStatus();
 			jobExecution.upgradeStatus(status);
 			jobExecution.setVersion(currentVersion);
@@ -199,7 +195,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 	}
 	
 	protected JAXBContext jaxbContext() {
-		JAXBContext jaxbContext = null;
+		JAXBContext jaxbContext;
 		try {
             jaxbContext = JAXBContext.newInstance(MarkLogicJobInstance.class);
         } catch (JAXBException ex) {
@@ -207,13 +203,4 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
         }
 		return jaxbContext;
 	}
-
-	public JobInstanceDao getJobInstanceDao() {
-		return jobInstanceDao;
-	}
-
-	public void setJobInstanceDao(JobInstanceDao jobInstanceDao) {
-		this.jobInstanceDao = jobInstanceDao;
-	}
-
 }
