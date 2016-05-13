@@ -20,6 +20,7 @@ import org.springframework.util.ReflectionUtils;
 
 import com.marklogic.client.DatabaseClient;
 import com.marklogic.spring.batch.core.AdaptedStepExecution;
+import com.marklogic.spring.batch.jdbc.support.incrementer.UriIncrementer;
 
 public class MarkLogicStepExecutionDao extends AbstractMarkLogicBatchMetadataDao implements StepExecutionDao {
 	
@@ -29,6 +30,7 @@ public class MarkLogicStepExecutionDao extends AbstractMarkLogicBatchMetadataDao
 	
 	public MarkLogicStepExecutionDao(DatabaseClient databaseClient) {
 		this.databaseClient = databaseClient;
+		this.incrementer = new UriIncrementer();
 	}
 
 	@Override

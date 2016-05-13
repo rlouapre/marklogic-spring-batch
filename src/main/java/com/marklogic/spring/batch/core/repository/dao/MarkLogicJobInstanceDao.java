@@ -33,6 +33,7 @@ import com.marklogic.client.io.JAXBHandle;
 import com.marklogic.client.io.SearchHandle;
 import com.marklogic.client.io.ValuesHandle;
 import com.marklogic.spring.batch.core.MarkLogicJobInstance;
+import com.marklogic.spring.batch.jdbc.support.incrementer.UriIncrementer;
 
 public class MarkLogicJobInstanceDao extends AbstractMarkLogicBatchMetadataDao implements JobInstanceDao {
 	
@@ -42,6 +43,7 @@ public class MarkLogicJobInstanceDao extends AbstractMarkLogicBatchMetadataDao i
 	
 	public MarkLogicJobInstanceDao(DatabaseClient databaseClient) {
 		this.databaseClient = databaseClient;
+		this.incrementer = new UriIncrementer();
 	}
 
 	@Override

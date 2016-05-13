@@ -31,6 +31,7 @@ import com.marklogic.client.query.StructuredQueryDefinition;
 
 import org.springframework.batch.core.BatchStatus;
 import com.marklogic.spring.batch.core.MarkLogicJobInstance;
+import com.marklogic.spring.batch.jdbc.support.incrementer.UriIncrementer;
 
 public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao implements JobExecutionDao {
 	
@@ -41,6 +42,7 @@ public class MarkLogicJobExecutionDao extends AbstractMarkLogicBatchMetadataDao 
 	
 	public MarkLogicJobExecutionDao(DatabaseClient databaseClient) {
 		this.databaseClient = databaseClient;
+		this.incrementer = new UriIncrementer();
 	}
 
 	@Override
