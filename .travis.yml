@@ -17,5 +17,5 @@ script:
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
         - ./gradlew :core:mlDeploy -PmlHost=localhost
         - echo $(pwd)
-        - echo './gradlew test -DexamplesDir=$(pwd) -PmlHost=localhost'
-        - ./gradlew test -DexamplesDir=$(pwd) -PmlHost=localhost
+        - echo '$(./gradlew test -DexamplesDir=$(pwd) -PmlHost=localhost)'
+        - $(./gradlew test -DexamplesDir=$(pwd) -PmlHost=localhost)
