@@ -18,4 +18,5 @@ script:
         - ./gradlew :core:mlDeploy -PmlHost=localhost
         # - pwd
         # - ./gradlew test -Djob.home="${TRAVIS_BUILD_DIR}/examples" --info
-        - ./gradlew test -Djob.home="/home/travis/build/rlouapre/marklogic-spring-batch/examples" --info
+        # - ./gradlew -Djob.home="/home/travis/build/rlouapre/marklogic-spring-batch/examples" test --info
+        - ./gradlew test --info
