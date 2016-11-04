@@ -13,5 +13,6 @@ before_install:
         - sleep 10
 
 script:
-        - ./gradlew :core:mlDeploy -PmlHost=ml
+        - ./gradlew :core:mlInit -PmlHost=ml
         - ./gradlew :core:mlInstallAdmin -PmlHost=ml -PmlAdminPassword=admin -PmlAdminUsername=admin
+        - ./gradlew :core:mlDeploy -PmlHost=ml
