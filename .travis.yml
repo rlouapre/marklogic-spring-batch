@@ -15,8 +15,8 @@ before_install:
 script:
         - ./gradlew :core:mlInit -PmlHost=localhost
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
-        - ./gradlew :core:mlDeploy -PmlHost=localhost
+        - ./gradlew :core:mlDeploy -PmlHost=localhost --debug
         # - pwd
         # - ./gradlew test -Djob.home="${TRAVIS_BUILD_DIR}/examples" --info
         # - ./gradlew -Djob.home="/home/travis/build/rlouapre/marklogic-spring-batch/examples" test --info
-        - ./gradlew test --info
+        - ./gradlew test --debug
