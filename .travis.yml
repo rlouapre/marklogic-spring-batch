@@ -9,7 +9,7 @@ before_install:
         - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
         - docker info
         - docker pull $ML8_LATEST_DOCKER_IMAGE
-        - docker run --name ml -d -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8200:8200 $ML8_LATEST_DOCKER_IMAGE
+        - docker run --name ml --hostname ml -d -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8200:8200 $ML8_LATEST_DOCKER_IMAGE
 
 script:
         - ./gradlew :core:mlDeploy -PmlHost=ml
