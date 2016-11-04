@@ -20,4 +20,4 @@ script:
         - pwd
         # - ls -lsa
         # - echo './gradlew test -DexamplesDir="${TRAVIS_BUILD_DIR}" -PmlHost=localhost'
-        - ./gradlew test -DexamplesDir="${TRAVIS_BUILD_DIR}/examples" --debug
+        - ./gradlew test -Djob/home= "${TRAVIS_BUILD_DIR}/examples" -DexamplesDir="${TRAVIS_BUILD_DIR}/examples" --debug
