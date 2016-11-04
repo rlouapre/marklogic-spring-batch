@@ -17,5 +17,7 @@ script:
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
         - ./gradlew :core:mlDeploy -PmlHost=localhost
         - echo "${TRAVIS_BUILD_DIR}"
+        - pwd
+        - ls -lsa
         # - echo './gradlew test -DexamplesDir="${TRAVIS_BUILD_DIR}" -PmlHost=localhost'
-        - ./gradlew test -DexamplesDir="${TRAVIS_BUILD_DIR}" -PmlHost=localhost
+        - ./gradlew test -DexamplesDir="${TRAVIS_BUILD_DIR}" --debug
