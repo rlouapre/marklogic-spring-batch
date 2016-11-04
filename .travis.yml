@@ -16,4 +16,5 @@ script:
         - ./gradlew :core:mlInit -PmlHost=localhost
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
         - ./gradlew :core:mlDeploy -PmlHost=localhost
-        - pwd
+        # - pwd
+        - ./gradlew test -PsystemProp.job.home="${TRAVIS_BUILD_DIR}/examples" --info
