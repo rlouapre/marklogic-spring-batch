@@ -47,6 +47,11 @@ task undeployMarkLogicJobRepository(type: JavaExec) {
     args = ["--undeploy_job_repo", "--jr_name", mlJobRepositoryName, "--jr_host", mlHost, "--jr_port", mlRestPort, "--jr_username", mlManageUsername, "--jr_password", mlManagePassword]
 }
 
+mlInstallAdmin {
+  adminUsername = project.hasProperty('mlAdminUsername') ? project.property('mlAdminUsername') : ''
+  adminPassword = project.hasProperty('mlAdminPassword') ? project.property('mlAdminPassword') : ''
+}
+
 // Setup the Job Repo in our test application so it's available for use by tests.
 mlPostDeploy.dependsOn deployMarkLogicJobRepository
 mlUndeploy.dependsOn undeployMarkLogicJobRepository
