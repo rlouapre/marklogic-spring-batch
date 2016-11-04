@@ -16,3 +16,4 @@ script:
         - ./gradlew :core:mlInit -PmlHost=localhost
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
         - ./gradlew :core:mlDeploy -PmlHost=localhost
+        - ./gradlew test -DexamplesDir='$(pwd)' -PmlHost=localhost
