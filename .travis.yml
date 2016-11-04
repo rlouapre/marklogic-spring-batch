@@ -17,4 +17,5 @@ script:
         - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
         - ./gradlew :core:mlDeploy -PmlHost=localhost
         # - pwd
-        - ./gradlew test -PsystemProp.job.home="${TRAVIS_BUILD_DIR}/examples" --info
+        # - ./gradlew test -Djob.home="${TRAVIS_BUILD_DIR}/examples" --info
+        - ./gradlew test -Djob.home="/home/travis/build/rlouapre/marklogic-spring-batch/examples" --info
