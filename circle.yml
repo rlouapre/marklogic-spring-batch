@@ -19,3 +19,7 @@ test:
     # - export job_home="${HOME}/marklogic-spring-batch/examples"
     - ./gradlew :core:test --info
     # - ./gradlew -Djob.home="/home/ubuntu/marklogic-spring-batch/examples" :core:test --info
+
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
