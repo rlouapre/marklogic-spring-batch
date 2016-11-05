@@ -24,7 +24,7 @@ test:
     - ./gradlew :core:mlDeploy -PmlHost=localhost --info
     # - export job_home="${HOME}/marklogic-spring-batch/examples"
     # - ./gradlew :core:test --info
-    - gradle :core:test --debug
+    - ./gradlew :core:test --debug
     # - ./gradlew -Djob.home="/home/ubuntu/marklogic-spring-batch/examples" :core:test --info
 
   post:
