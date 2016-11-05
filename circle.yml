@@ -16,5 +16,5 @@ test:
     - ./gradlew :core:mlInit -PmlHost=localhost
     - ./gradlew :core:mlInstallAdmin -PmlHost=localhost -PmlAdminPassword=admin -PmlAdminUsername=admin
     - ./gradlew :core:mlDeploy -PmlHost=localhost --info
-    - ./gradlew :core:test --info
+    - cd core && gradle test -Djob.home="/home/ubuntu/marklogic-spring-batch/examples" --info
     # - ./gradlew -Djob.home="/home/ubuntu/marklogic-spring-batch/examples" :core:test --info
