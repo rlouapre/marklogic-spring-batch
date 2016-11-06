@@ -84,7 +84,7 @@ project(':core') {
         tasks = [ 'test' ]
     }
 
-    test.dependsOn testExamples
+    // test.dependsOn testExamples
 }
 
 project(':test') {
